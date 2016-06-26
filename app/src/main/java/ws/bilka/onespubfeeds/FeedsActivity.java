@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,7 @@ public class FeedsActivity extends AppCompatActivity {
     private boolean loadingInProgress = false;
     private static final int PAGE_SIZE = 10;
     private static final int FEED_OWNER_ID = -34613199;
+    private static final int POST_TEXT_MAX_LENGHT = 500;
     private int cursor = 0;
 
     private Map<Integer, UserItem> users = new HashMap<>();
@@ -102,7 +104,6 @@ public class FeedsActivity extends AppCompatActivity {
             parseGroups(r.optJSONArray("groups"));
 
             JSONArray items = r.getJSONArray("items");
-
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = (JSONObject) items.get(i);
                 VKApiPost vkApiPost = new VKApiPost().parse(item);
@@ -126,6 +127,41 @@ public class FeedsActivity extends AppCompatActivity {
                         feedItem.setPhoto(photo.photo_604);
                     }
                 }
+
+                List<FeedItem> reposts = new LinkedList<>();
+                for (int k=0; k<vkApiPost.copy_history.size(); k++) {
+                    VKApiPost repost = vkApiPost.copy_history.get(k);
+                    FeedItem repostFeedItem = new FeedItem();
+                    repostFeedItem.setId(repost.id);
+
+                    String repostText = "";
+                    if (repost.text.length() > POST_TEXT_MAX_LENGHT) {
+                        repostText = repost.text.substring(0, POST_TEXT_MAX_LENGHT) + "...";
+                    } else {
+                        repostText = repost.text;
+                    }
+
+                    repostFeedItem.setText(repostText);
+                    repostFeedItem.setTimeStamp(secondsToMilliseconds(repost.date));
+                    int repostOwnerId = repost.from_id;
+                    if(repostOwnerId != 0) {
+                        UserItem user = users.get(Math.abs(repostOwnerId));
+                        if (user != null) {
+                            repostFeedItem.setAvatarImage(user.getAvatar());
+                            repostFeedItem.setTitle(user.getName());
+                        }
+                    }
+                    for (int l=0; l<repost.attachments.size(); l++) {
+                        VKAttachments.VKApiAttachment repostAttachment = repost.attachments.get(l);
+                        if (repostAttachment.getType().equals(VKAttachments.TYPE_PHOTO)) {
+                            VKApiPhoto repostPhoto = (VKApiPhoto) repostAttachment;
+                            repostFeedItem.setPhoto(repostPhoto.photo_604);
+                        }
+                    }
+                    reposts.add(repostFeedItem);
+                }
+                Log.i(TAG, "Number of reposts: " + reposts.size());
+                feedItem.setReposts(reposts);
 
                 feedItems.add(feedItem);
             }
@@ -168,5 +204,4 @@ public class FeedsActivity extends AppCompatActivity {
     private long secondsToMilliseconds(long seconds) {
         return seconds * DateUtils.SECOND_IN_MILLIS;
     }
-
 }

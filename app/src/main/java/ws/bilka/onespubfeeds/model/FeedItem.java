@@ -1,5 +1,7 @@
 package ws.bilka.onespubfeeds.model;
 
+import java.util.List;
+
 public class FeedItem {
     private int id;
     private String title;
@@ -7,6 +9,7 @@ public class FeedItem {
     private String text;
     private String photo;
     private long timeStamp;
+    private List<FeedItem> reposts;
 
     public FeedItem() {
     }
@@ -57,5 +60,13 @@ public class FeedItem {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public List<FeedItem> getReposts() {
+        return reposts;
+    }
+
+    public void setReposts(List<FeedItem> reposts) {
+        this.reposts = reposts;
     }
 }

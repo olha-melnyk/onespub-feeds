@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -25,6 +26,7 @@ public class FeedListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<FeedItem> feedItems;
+
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     public FeedListAdapter(Activity activity, List<FeedItem> feedItems) {
@@ -55,7 +57,7 @@ public class FeedListAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.feed_item, null);
+            convertView = inflater.inflate(R.layout.post_item, null);
 
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView timestamp = (TextView) convertView.findViewById(R.id.timestamp);
@@ -85,8 +87,29 @@ public class FeedListAdapter extends BaseAdapter {
             text.setVisibility(View.GONE);
         }
 
+        LinearLayout repostLayout = (LinearLayout) convertView.findViewById(R.id.repostLayout);
+
+        if(item.getReposts() != null && item.getReposts().size() > 0) {
+            TextView repostTitle = (TextView) convertView.findViewById(R.id.repostTitle);
+            TextView repostText = (TextView) convertView.findViewById(R.id.repostText);
+            NetworkImageView repostAvatarImage = (NetworkImageView) convertView
+                    .findViewById(R.id.repostAvatarImage);
+            TextView repostTimestamp = (TextView) convertView.findViewById(R.id.repostTimestamp);
+            RecyclerView repostRecyclerView = (RecyclerView) convertView.findViewById(R.id.repostRecyclerView);
+            RecyclerView.LayoutManager repostLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
+            repostRecyclerView.setLayoutManager(repostLayoutManager);
+
+            FeedItem repostFeedItem = item.getReposts().get(0);
+            repostTitle.setText(repostFeedItem.getTitle());
+            repostText.setText(repostFeedItem.getText());
+            repostAvatarImage.setImageUrl(repostFeedItem.getAvatarImage(), imageLoader);
+            repostTimestamp.setText(timeAgo);
+            repostRecyclerView.setAdapter(new PhotoAttachmentsAdapter(new String[]{repostFeedItem.getPhoto()},activity));
+            repostLayout.setVisibility(View.VISIBLE);
+        } else {
+            repostLayout.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
-
-
 }
