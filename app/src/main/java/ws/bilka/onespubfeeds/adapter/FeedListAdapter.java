@@ -2,6 +2,8 @@ package ws.bilka.onespubfeeds.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -61,9 +63,14 @@ public class FeedListAdapter extends BaseAdapter {
                 .findViewById(R.id.avatarImage);
         TextView text = (TextView) convertView.findViewById(R.id.text);
 
-        FeedItem item = feedItems.get(position);
+        RecyclerView recyclerView = (RecyclerView) convertView.findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
 
+        FeedItem item = feedItems.get(position);
         title.setText(item.getTitle());
+
+        recyclerView.setAdapter(new PhotoAttachmentsAdapter(new String[]{item.getPhoto()}, activity));
 
         avatarImage.setImageUrl(item.getAvatarImage(), imageLoader);
 

@@ -13,8 +13,10 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiCommunity;
+import com.vk.sdk.api.model.VKApiPhoto;
 import com.vk.sdk.api.model.VKApiPost;
 import com.vk.sdk.api.model.VKApiUser;
+import com.vk.sdk.api.model.VKAttachments;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +56,6 @@ public class FeedsActivity extends AppCompatActivity {
 
         listAdapter = new FeedListAdapter(this, feedItems);
         listView.setAdapter(listAdapter);
-
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -83,7 +84,6 @@ public class FeedsActivity extends AppCompatActivity {
                         VKApiConst.EXTENDED, 1));
         request.secure = false;
         request.useSystemLanguage = false;
-
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
@@ -105,7 +105,6 @@ public class FeedsActivity extends AppCompatActivity {
 
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = (JSONObject) items.get(i);
-
                 VKApiPost vkApiPost = new VKApiPost().parse(item);
                 FeedItem feedItem = new FeedItem();
                 feedItem.setId(vkApiPost.id);
@@ -117,6 +116,14 @@ public class FeedsActivity extends AppCompatActivity {
                     if(user != null) {
                         feedItem.setAvatarImage(user.getAvatar());
                         feedItem.setTitle(user.getName());
+                    }
+                }
+
+                for (int j = 0; j<vkApiPost.attachments.size(); j++) {
+                    VKAttachments.VKApiAttachment attachment = vkApiPost.attachments.get(j);
+                    if(attachment.getType().equals(VKAttachments.TYPE_PHOTO)) {
+                        VKApiPhoto photo = (VKApiPhoto) attachment;
+                        feedItem.setPhoto(photo.photo_604);
                     }
                 }
 
@@ -144,7 +151,7 @@ public class FeedsActivity extends AppCompatActivity {
         }
     }
 
-    private void parseGroups (JSONArray groups){
+    private void parseGroups(JSONArray groups) {
         if(groups == null) return;
         for (int i=0; i<groups.length(); i++) {
             JSONObject group = groups.optJSONObject(i);

@@ -5,6 +5,7 @@ public class FeedItem {
     private String title;
     private String avatarImage;
     private String text;
+    private String photo;
     private long timeStamp;
 
     public FeedItem() {
@@ -48,5 +49,13 @@ public class FeedItem {
 
     public void setAvatarImage(String avatarImage) {
         this.avatarImage = avatarImage;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

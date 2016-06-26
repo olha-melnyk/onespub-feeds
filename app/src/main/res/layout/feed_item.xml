@@ -60,6 +60,12 @@
             android:paddingRight="@dimen/feed_item_padding_left_right"
             android:paddingTop="@dimen/feed_item_status_pad_top" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_margin="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
 
