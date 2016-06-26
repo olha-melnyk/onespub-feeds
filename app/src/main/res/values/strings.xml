@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Onespub Feeds</string>
     <integer name="com_vk_sdk_AppId">5520934</integer>
+
+    <string name="action_sign_in_short">Sign in with VK</string>
+    <string name="continue_using_app">Feeds</string>
+    <string name="logout">Logout</string>
 </resources>
