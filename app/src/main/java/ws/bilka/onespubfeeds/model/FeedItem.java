@@ -3,6 +3,7 @@ package ws.bilka.onespubfeeds.model;
 public class FeedItem {
     private int id;
     private String title;
+    private String avatarImage;
     private String text;
     private long timeStamp;
 
@@ -41,4 +42,11 @@ public class FeedItem {
         this.timeStamp = timeStamp;
     }
 
+    public String getAvatarImage() {
+        return avatarImage;
+    }
+
+    public void setAvatarImage(String avatarImage) {
+        this.avatarImage = avatarImage;
+    }
 }
