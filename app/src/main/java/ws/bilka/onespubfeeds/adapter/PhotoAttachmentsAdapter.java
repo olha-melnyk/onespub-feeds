@@ -9,11 +9,13 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import ws.bilka.onespubfeeds.R;
 
 public class PhotoAttachmentsAdapter extends RecyclerView.Adapter<PhotoAttachmentsAdapter.MyViewHolder> {
 
-    private String[] mPhotos;
+    private List<String> mPhotos;
     private Context mContext;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -24,7 +26,7 @@ public class PhotoAttachmentsAdapter extends RecyclerView.Adapter<PhotoAttachmen
         }
     }
 
-    public PhotoAttachmentsAdapter(String[] photos, Context context) {
+    public PhotoAttachmentsAdapter(List<String> photos, Context context) {
         this.mPhotos = photos;
         mContext = context;
     }
@@ -40,12 +42,12 @@ public class PhotoAttachmentsAdapter extends RecyclerView.Adapter<PhotoAttachmen
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Picasso.with(mContext)
-                .load(mPhotos[position])
+                .load(mPhotos.get(position))
                 .into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return mPhotos.length;
+        return mPhotos.size();
     }
 }

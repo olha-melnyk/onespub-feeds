@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
@@ -120,13 +123,15 @@ public class FeedsActivity extends AppCompatActivity {
                     }
                 }
 
+                List<String> photos = new LinkedList<>();
                 for (int j = 0; j<vkApiPost.attachments.size(); j++) {
                     VKAttachments.VKApiAttachment attachment = vkApiPost.attachments.get(j);
                     if(attachment.getType().equals(VKAttachments.TYPE_PHOTO)) {
                         VKApiPhoto photo = (VKApiPhoto) attachment;
-                        feedItem.setPhoto(photo.photo_604);
+                        photos.add(photo.photo_604);
                     }
                 }
+                feedItem.setPhotos(photos);
 
                 List<FeedItem> reposts = new LinkedList<>();
                 for (int k=0; k<vkApiPost.copy_history.size(); k++) {
@@ -151,13 +156,16 @@ public class FeedsActivity extends AppCompatActivity {
                             repostFeedItem.setTitle(user.getName());
                         }
                     }
+
+                    List<String> repostPhotos =new LinkedList<>();
                     for (int l=0; l<repost.attachments.size(); l++) {
                         VKAttachments.VKApiAttachment repostAttachment = repost.attachments.get(l);
                         if (repostAttachment.getType().equals(VKAttachments.TYPE_PHOTO)) {
                             VKApiPhoto repostPhoto = (VKApiPhoto) repostAttachment;
-                            repostFeedItem.setPhoto(repostPhoto.photo_604);
+                            repostPhotos.add(repostPhoto.photo_604);
                         }
                     }
+                    repostFeedItem.setPhotos(repostPhotos);
                     reposts.add(repostFeedItem);
                 }
                 Log.i(TAG, "Number of reposts: " + reposts.size());
@@ -203,5 +211,22 @@ public class FeedsActivity extends AppCompatActivity {
 
     private long secondsToMilliseconds(long seconds) {
         return seconds * DateUtils.SECOND_IN_MILLIS;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                Toast.makeText(this, "Clicked: Menu", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
     }
 }

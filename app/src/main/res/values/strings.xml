@@ -5,4 +5,5 @@
     <string name="action_sign_in_short">Sign in with VK</string>
     <string name="continue_using_app">Feeds</string>
     <string name="logout">Logout</string>
+    <string name="refresh">Refresh</string>
 </resources>

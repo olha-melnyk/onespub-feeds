@@ -72,7 +72,7 @@ public class FeedListAdapter extends BaseAdapter {
         FeedItem item = feedItems.get(position);
         title.setText(item.getTitle());
 
-        recyclerView.setAdapter(new PhotoAttachmentsAdapter(new String[]{item.getPhoto()}, activity));
+        recyclerView.setAdapter(new PhotoAttachmentsAdapter(item.getPhotos(), activity));
 
         avatarImage.setImageUrl(item.getAvatarImage(), imageLoader);
 
@@ -103,8 +103,11 @@ public class FeedListAdapter extends BaseAdapter {
             repostTitle.setText(repostFeedItem.getTitle());
             repostText.setText(repostFeedItem.getText());
             repostAvatarImage.setImageUrl(repostFeedItem.getAvatarImage(), imageLoader);
-            repostTimestamp.setText(timeAgo);
-            repostRecyclerView.setAdapter(new PhotoAttachmentsAdapter(new String[]{repostFeedItem.getPhoto()},activity));
+            CharSequence repostTimeAgo = DateUtils.getRelativeTimeSpanString(repostFeedItem.getTimeStamp(),
+                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+            repostTimestamp.setText(repostTimeAgo);
+            repostRecyclerView.setAdapter(new PhotoAttachmentsAdapter(repostFeedItem.getPhotos(),activity));
+
             repostLayout.setVisibility(View.VISIBLE);
         } else {
             repostLayout.setVisibility(View.GONE);

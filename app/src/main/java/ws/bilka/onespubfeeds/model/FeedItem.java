@@ -7,9 +7,9 @@ public class FeedItem {
     private String title;
     private String avatarImage;
     private String text;
-    private String photo;
     private long timeStamp;
     private List<FeedItem> reposts;
+    private List<String> photos;
 
     public FeedItem() {
     }
@@ -54,19 +54,19 @@ public class FeedItem {
         this.avatarImage = avatarImage;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public List<FeedItem> getReposts() {
         return reposts;
     }
 
     public void setReposts(List<FeedItem> reposts) {
         this.reposts = reposts;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }
