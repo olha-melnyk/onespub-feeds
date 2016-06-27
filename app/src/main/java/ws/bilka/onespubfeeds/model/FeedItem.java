@@ -1,5 +1,6 @@
 package ws.bilka.onespubfeeds.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class FeedItem {
@@ -8,8 +9,11 @@ public class FeedItem {
     private String avatarImage;
     private String text;
     private long timeStamp;
-    private List<FeedItem> reposts;
-    private List<String> photos;
+    private List<FeedItem> reposts = new LinkedList<>();
+    private List<String> photos = new LinkedList<>();
+    private int numOfLikes;
+    private int numOfReposts;
+    private int numOfComments;
 
     public FeedItem() {
     }
@@ -68,5 +72,29 @@ public class FeedItem {
 
     public void setPhotos(List<String> photos) {
         this.photos = photos;
+    }
+
+    public int getNumOfComments() {
+        return numOfComments;
+    }
+
+    public void setNumOfComments(int numOfComments) {
+        this.numOfComments = numOfComments;
+    }
+
+    public int getNumOfLikes() {
+        return numOfLikes;
+    }
+
+    public void setNumOfLikes(int numOfLikes) {
+        this.numOfLikes = numOfLikes;
+    }
+
+    public int getNumOfReposts() {
+        return numOfReposts;
+    }
+
+    public void setNumOfReposts(int numOfReposts) {
+        this.numOfReposts = numOfReposts;
     }
 }

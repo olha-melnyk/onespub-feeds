@@ -64,6 +64,9 @@ public class FeedListAdapter extends BaseAdapter {
         NetworkImageView avatarImage = (NetworkImageView) convertView
                 .findViewById(R.id.avatarImage);
         TextView text = (TextView) convertView.findViewById(R.id.text);
+        TextView repostCount = (TextView)convertView.findViewById(R.id.repost_count);
+        TextView commentCount = (TextView)convertView.findViewById(R.id.comment_count);
+        TextView likeCount = (TextView)convertView.findViewById(R.id.like_count);
 
         RecyclerView recyclerView = (RecyclerView) convertView.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
@@ -71,6 +74,9 @@ public class FeedListAdapter extends BaseAdapter {
 
         FeedItem item = feedItems.get(position);
         title.setText(item.getTitle());
+        repostCount.setText(String.valueOf(item.getNumOfReposts()));
+        commentCount.setText(String.valueOf(item.getNumOfComments()));
+        likeCount.setText(String.valueOf(item.getNumOfLikes()));
 
         recyclerView.setAdapter(new PhotoAttachmentsAdapter(item.getPhotos(), activity));
 

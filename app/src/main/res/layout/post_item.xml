@@ -22,5 +22,58 @@
         <include layout="@layout/repost_item"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_count_like_repost_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/comment_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_message_white_24dp"/>
+
+        <TextView
+            android:id="@+id/comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/repost_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_repeat_white_24dp"/>
+
+        <TextView
+            android:id="@+id/repost_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/like_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_favorite_border_white_24dp"/>
+
+        <TextView
+            android:id="@+id/like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>
