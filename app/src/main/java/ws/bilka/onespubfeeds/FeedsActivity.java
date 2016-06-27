@@ -111,6 +111,7 @@ public class FeedsActivity extends AppCompatActivity {
                 VKApiPost vkApiPost = new VKApiPost().parse(item);
                 FeedItem feedItem = new FeedItem();
                 feedItem.setId(vkApiPost.id);
+                feedItem.setOwnerId(vkApiPost.from_id);
 
                 String postText = StringUtils.cut(vkApiPost.text, POST_TEXT_MAX_LENGHT);
                 feedItem.setText(postText);

@@ -22,6 +22,7 @@ import java.util.List;
 import ws.bilka.onespubfeeds.AppController;
 import ws.bilka.onespubfeeds.R;
 import ws.bilka.onespubfeeds.model.FeedItem;
+import ws.bilka.onespubfeeds.utils.VKRequestHelper;
 
 public class FeedListAdapter extends BaseAdapter {
     private Activity activity;
@@ -67,20 +68,43 @@ public class FeedListAdapter extends BaseAdapter {
         TextView text = (TextView) convertView.findViewById(R.id.text);
         TextView repostCount = (TextView)convertView.findViewById(R.id.repost_count);
         TextView commentCount = (TextView)convertView.findViewById(R.id.comment_count);
-        TextView likeCount = (TextView)convertView.findViewById(R.id.like_count);
+        final TextView likeCount = (TextView)convertView.findViewById(R.id.like_count);
 
-        ImageButton like = (ImageButton) convertView.findViewById(R.id.like_image);
-        ImageButton notLike = (ImageButton) convertView.findViewById(R.id.not_like_image);
+        final ImageButton like = (ImageButton) convertView.findViewById(R.id.like_image);
+        final ImageButton notLike = (ImageButton) convertView.findViewById(R.id.not_like_image);
 
         RecyclerView recyclerView = (RecyclerView) convertView.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        FeedItem item = feedItems.get(position);
+        final FeedItem item = feedItems.get(position);
         title.setText(item.getTitle());
         repostCount.setText(String.valueOf(item.getNumOfReposts()));
         commentCount.setText(String.valueOf(item.getNumOfComments()));
         likeCount.setText(String.valueOf(item.getNumOfLikes()));
+
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VKRequestHelper.deleteLike("post", item.getOwnerId(), item.getId());
+                item.setLiked(false);
+                notLike.setVisibility(View.VISIBLE);
+                like.setVisibility(View.GONE);
+                item.setNumOfLikes(item.getNumOfLikes() - 1);
+                likeCount.setText(String.valueOf(item.getNumOfLikes()));
+            }
+        });
+        notLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VKRequestHelper.addLike("post", item.getOwnerId(), item.getId());
+                item.setLiked(true);
+                like.setVisibility(View.VISIBLE);
+                notLike.setVisibility(View.GONE);
+                item.setNumOfLikes(item.getNumOfLikes() + 1);
+                likeCount.setText(String.valueOf(item.getNumOfLikes()));
+            }
+        });
 
         recyclerView.setAdapter(new PhotoAttachmentsAdapter(item.getPhotos(), activity));
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class FeedItem {
     private int id;
+    private int ownerId;
     private String title;
     private String avatarImage;
     private String text;
@@ -105,5 +106,13 @@ public class FeedItem {
 
     public void setLiked(boolean liked) {
         this.isLiked = liked;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 }
