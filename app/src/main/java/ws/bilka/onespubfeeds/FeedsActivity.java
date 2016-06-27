@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
@@ -217,7 +216,8 @@ public class FeedsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
-                Toast.makeText(this, "Clicked: Menu", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(getIntent());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
