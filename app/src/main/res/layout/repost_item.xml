@@ -15,6 +15,13 @@
             android:orientation="horizontal"
             android:paddingRight="@dimen/feed_item_padding_left_right" >
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:src="@drawable/ic_repeat_black_24dp"/>
+
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/repostAvatarImage"
                 android:layout_width="@dimen/feed_item_avatar_image"

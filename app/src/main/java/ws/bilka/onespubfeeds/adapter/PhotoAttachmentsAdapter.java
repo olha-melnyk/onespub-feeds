@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.koushikdutta.ion.Ion;
 
 import java.util.List;
 
@@ -41,9 +41,10 @@ public class PhotoAttachmentsAdapter extends RecyclerView.Adapter<PhotoAttachmen
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Picasso.with(mContext)
-                .load(mPhotos.get(position))
-                .into(holder.image);
+       Ion.with(holder.image)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.noplaceholder)
+                .load(mPhotos.get(position));
     }
 
     @Override

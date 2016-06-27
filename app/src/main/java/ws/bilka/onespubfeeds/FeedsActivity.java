@@ -15,9 +15,11 @@ import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiCommunity;
+import com.vk.sdk.api.model.VKApiDocument;
 import com.vk.sdk.api.model.VKApiPhoto;
 import com.vk.sdk.api.model.VKApiPost;
 import com.vk.sdk.api.model.VKApiUser;
+import com.vk.sdk.api.model.VKApiVideo;
 import com.vk.sdk.api.model.VKAttachments;
 
 import org.json.JSONArray;
@@ -135,6 +137,16 @@ public class FeedsActivity extends AppCompatActivity {
                     if(attachment.getType().equals(VKAttachments.TYPE_PHOTO)) {
                         VKApiPhoto photo = (VKApiPhoto) attachment;
                         photos.add(photo.photo_604);
+                    } else if (attachment.getType().equals(VKAttachments.TYPE_VIDEO)) {
+                        VKApiVideo video = (VKApiVideo) attachment;
+                        if(video.photo_640 != null && video.photo_640.length() > 0) {
+                            photos.add(video.photo_640);
+                        } else {
+                            photos.add(video.photo_320);
+                        }
+                    } else if (attachment.getType().equals(VKAttachments.TYPE_DOC)) {
+                        VKApiDocument document = (VKApiDocument) attachment;
+                        photos.add(document.photo_130);
                     }
                 }
                 feedItem.setPhotos(photos);
@@ -164,6 +176,16 @@ public class FeedsActivity extends AppCompatActivity {
                         if (repostAttachment.getType().equals(VKAttachments.TYPE_PHOTO)) {
                             VKApiPhoto repostPhoto = (VKApiPhoto) repostAttachment;
                             repostPhotos.add(repostPhoto.photo_604);
+                        } else if (repostAttachment.getType().equals(VKAttachments.TYPE_VIDEO)) {
+                            VKApiVideo video = (VKApiVideo) repostAttachment;
+                            if(video.photo_640 != null && video.photo_640.length() > 0) {
+                                repostPhotos.add(video.photo_640);
+                            } else {
+                                repostPhotos.add(video.photo_320);
+                            }
+                        } else if (repostAttachment.getType().equals(VKAttachments.TYPE_DOC)){
+                            VKApiDocument repostDoc = (VKApiDocument) repostAttachment;
+                            repostPhotos.add(repostDoc.photo_130);
                         }
                     }
                     repostFeedItem.setPhotos(repostPhotos);
