@@ -33,6 +33,7 @@ import java.util.Map;
 import ws.bilka.onespubfeeds.adapter.FeedListAdapter;
 import ws.bilka.onespubfeeds.model.FeedItem;
 import ws.bilka.onespubfeeds.model.UserItem;
+import ws.bilka.onespubfeeds.utils.StringUtils;
 
 public class FeedsActivity extends AppCompatActivity {
 
@@ -101,7 +102,6 @@ public class FeedsActivity extends AppCompatActivity {
     private void parseVkResponse(JSONObject response) {
         try {
             JSONObject r = response.getJSONObject("response");
-
             parseProfiles(r.optJSONArray("profiles"));
             parseGroups(r.optJSONArray("groups"));
 
@@ -111,7 +111,9 @@ public class FeedsActivity extends AppCompatActivity {
                 VKApiPost vkApiPost = new VKApiPost().parse(item);
                 FeedItem feedItem = new FeedItem();
                 feedItem.setId(vkApiPost.id);
-                feedItem.setText(vkApiPost.text);
+
+                String postText = StringUtils.cut(vkApiPost.text, POST_TEXT_MAX_LENGHT);
+                feedItem.setText(postText);
                 feedItem.setTimeStamp(secondsToMilliseconds(vkApiPost.date));
                 int ownerId = vkApiPost.from_id;
                 if(ownerId != 0) {
@@ -141,14 +143,9 @@ public class FeedsActivity extends AppCompatActivity {
                     FeedItem repostFeedItem = new FeedItem();
                     repostFeedItem.setId(repost.id);
 
-                    String repostText = "";
-                    if (repost.text.length() > POST_TEXT_MAX_LENGHT) {
-                        repostText = repost.text.substring(0, POST_TEXT_MAX_LENGHT) + "...";
-                    } else {
-                        repostText = repost.text;
-                    }
-
+                    String repostText = StringUtils.cut(repost.text, POST_TEXT_MAX_LENGHT);
                     repostFeedItem.setText(repostText);
+
                     repostFeedItem.setTimeStamp(secondsToMilliseconds(repost.date));
                     int repostOwnerId = repost.from_id;
                     if(repostOwnerId != 0) {
