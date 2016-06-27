@@ -14,6 +14,7 @@ public class FeedItem {
     private int numOfLikes;
     private int numOfReposts;
     private int numOfComments;
+    private boolean isLiked;
 
     public FeedItem() {
     }
@@ -96,5 +97,13 @@ public class FeedItem {
 
     public void setNumOfReposts(int numOfReposts) {
         this.numOfReposts = numOfReposts;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.isLiked = liked;
     }
 }

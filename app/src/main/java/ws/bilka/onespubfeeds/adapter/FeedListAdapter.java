@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -68,6 +69,9 @@ public class FeedListAdapter extends BaseAdapter {
         TextView commentCount = (TextView)convertView.findViewById(R.id.comment_count);
         TextView likeCount = (TextView)convertView.findViewById(R.id.like_count);
 
+        ImageButton like = (ImageButton) convertView.findViewById(R.id.like_image);
+        ImageButton notLike = (ImageButton) convertView.findViewById(R.id.not_like_image);
+
         RecyclerView recyclerView = (RecyclerView) convertView.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -85,6 +89,14 @@ public class FeedListAdapter extends BaseAdapter {
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(item.getTimeStamp(),
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         timestamp.setText(timeAgo);
+
+        if (item.isLiked()) {
+            like.setVisibility(View.VISIBLE);
+            notLike.setVisibility(View.GONE);
+        } else {
+            like.setVisibility(View.GONE);
+            notLike.setVisibility(View.VISIBLE);
+        }
 
         if (!TextUtils.isEmpty(item.getText())) {
             text.setText(item.getText());

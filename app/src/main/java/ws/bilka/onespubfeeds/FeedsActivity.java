@@ -126,6 +126,7 @@ public class FeedsActivity extends AppCompatActivity {
                 feedItem.setNumOfComments(vkApiPost.comments_count);
                 feedItem.setNumOfReposts(vkApiPost.reposts_count);
                 feedItem.setNumOfLikes(vkApiPost.likes_count);
+                feedItem.setLiked(vkApiPost.user_likes);
 
                 List<String> photos = new LinkedList<>();
                 for (int j = 0; j<vkApiPost.attachments.size(); j++) {
