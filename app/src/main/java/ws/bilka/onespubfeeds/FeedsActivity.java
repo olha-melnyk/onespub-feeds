@@ -146,7 +146,9 @@ public class FeedsActivity extends AppCompatActivity {
                         }
                     } else if (attachment.getType().equals(VKAttachments.TYPE_DOC)) {
                         VKApiDocument document = (VKApiDocument) attachment;
-                        photos.add(document.photo_130);
+                        if(document.isGif()) {
+                            photos.add(document.url);
+                        }
                     }
                 }
                 feedItem.setPhotos(photos);
@@ -185,7 +187,9 @@ public class FeedsActivity extends AppCompatActivity {
                             }
                         } else if (repostAttachment.getType().equals(VKAttachments.TYPE_DOC)){
                             VKApiDocument repostDoc = (VKApiDocument) repostAttachment;
-                            repostPhotos.add(repostDoc.photo_130);
+                            if (repostDoc.isGif()) {
+                                repostPhotos.add(repostDoc.url);
+                            }
                         }
                     }
                     repostFeedItem.setPhotos(repostPhotos);
